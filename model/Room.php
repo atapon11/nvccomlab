@@ -1,5 +1,5 @@
 <?php
-class Course{
+class Room{
     private $ConDB;
     public function __construct(){
         $con = new ConDB();
@@ -7,9 +7,9 @@ class Course{
         $this->ConDB = $con->conn;
     }
 
-    public function getCourse()
+    public function getRoom()
     {
-        $sql = "SELECT * FROM test order by room_id asc";
+        $sql = "SELECT * FROM tb_room order by room_id asc";
         $query = $this->ConDB->prepare($sql);
         if( $query->execute()){
             $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -21,7 +21,7 @@ class Course{
 
      public function getCourseDetail($id)
     {
-        $sql = "SELECT * FROM sci_cs where cs_id = ".$id;
+        $sql = "SELECT * FROM tb_room where room_id = ".$id;
         $query = $this->ConDB->prepare($sql);
         if( $query->execute()){
             $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -55,9 +55,9 @@ class Course{
     //     }
     // }
 
-    public function addCourse($data_course)
+    public function addRoom($data_course)
     {
-        $sql = "INSERT INTO sci_cs (cs_id, cs_name, cs_img, cs_date, cs_wallet)";
+        $sql = "INSERT INTO tb_room (room_id, room_name)";
         $sql .= " VALUES ('', :cs_name, :cs_img, :cs_date, :cs_wallet);";
         $query = $this->ConDB->prepare($sql);
         if( $query->execute($data_course)){
@@ -67,9 +67,9 @@ class Course{
         }
     }
 
-    public function delCourse($k_id)
+    public function delRoom($room_id)
     {
-        $sql = "DELETE FROM agency WHERE `agency_id`='".$k_id."'";
+        $sql = "DELETE FROM tb_room WHERE `room_id`='".$room_id."'";
         $query = $this->ConDB->prepare($sql);
         if( $query->execute()){
             return true;
@@ -78,9 +78,9 @@ class Course{
         }
     }
 
-    public function editCourse($a_id, $a_name, $a_context, $a_pic, $a_location)
+    public function editRoom($room_id, $room_name)
     {
-        $sql = "UPDATE agency SET agency_name = '". $a_name ."', agency_context = '". $a_context ."', agency_pic = '". $a_pic ."', agency_location = '". $a_location ."' WHERE agency_id = '". $a_id ."'";
+        $sql = "UPDATE tb_room SET room_name = '". $room_name ."' WHERE room_id = '". $room_id ."'";
         $query = $this->ConDB->prepare($sql);
         if( $query->execute()){
             return true;
